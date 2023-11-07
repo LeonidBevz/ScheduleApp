@@ -54,12 +54,6 @@ class EdPlan:
             self.sum.append(0)
             for j in range(len(self.planFloat[i])):
                 self.sum[i] += self.planFloat[i][j]
-        # for i in range(len(self.plan)):
-        #    print(self.plan[i])
-        #    print(self.planFloat[i])
-
-
-
 
     def setPlan(self, names, nums, currCourse):
         if len(self.planFloat) == 0:
@@ -75,7 +69,3 @@ class EdPlan:
             self.planFloat[currCourse].append(nums[i])
             self.sum[currCourse] += nums[i]
 
-        # print(cell.value,end=" ")
-# print()
-# for i in range(len(planstr)):
-# print(planstr[i])

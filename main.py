@@ -68,10 +68,7 @@ class MyWindow(QMainWindow):
 
         self.PlanYearSpinBox.valueChanged.connect(self.StartPlanYearChanged)
 
-        startDate=QDate(2026,9,1)
-        for i in range(53):
-            print(self.currEdWeekNumber(startDate), startDate)
-            startDate=startDate.addDays(7)
+
 
     def groupChanged(self):
         self.currGroup = self.group_comboBox.currentIndex()
@@ -175,6 +172,7 @@ class MyWindow(QMainWindow):
         self.PlanYearLabel.setText(str(self.currentPlanYear))
         self.setPlanCalendarsInterval(self.currentPlanYear)
         self.updatePlanLabels()
+        self.clearCellColors()
         self.updateWeekColors()
 
     def setCellBGColor(self, date, color, calendar):
@@ -194,16 +192,11 @@ class MyWindow(QMainWindow):
         self.clearCellColors()
         startDate = QDate(self.currentPlanYear, 9, 1)
         lastWeek = 1
-        print(self.currEdWeekNumber(startDate) - lastWeek)
         for i in range(len(Plan.plan[self.currCourse])):
             while self.currEdWeekNumber(startDate) - lastWeek < int(Plan.planFloat[self.currCourse][i]) and self.currEdWeekNumber(startDate) <= 52:
                 self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
-                #print(self.currEdWeekNumber(startDate))
                 startDate = startDate.addDays(1)
-                if lastWeek < 71:
-                    print(self.currEdWeekNumber(startDate), lastWeek)
             lastWeek = self.currEdWeekNumber(startDate)
-            # self.currEdWeekNumber(startDate)
 
     def updatePlanLabels(self):
         for i in range(10):
@@ -249,7 +242,7 @@ class MyWindow(QMainWindow):
         errorMessage.exec()
 
     def currEdWeekNumber(self, date):####udlasdlkfjals;kdjflajsdffix###
-        if 9 <= date.month() <= 12:
+        if date.weekNumber()[0] >= QDate(date.year(), 9, 1).weekNumber()[0]:
             if date.weekNumber()[0] != 1:
                 return date.weekNumber()[0] - QDate(date.year(), 9, 1).weekNumber()[0] + 1
             else:
@@ -271,7 +264,6 @@ class MyWindow(QMainWindow):
         self.courseSpinBox.setMaximum(1)
         print(self.currCourse)
         self.updatePlanLabels()
-        self.setSemester()
 
     def setPlanCalendarsInterval(self, year):
         for i in range(12):
@@ -284,11 +276,13 @@ class MyWindow(QMainWindow):
             else:
                 self.PlanCalendars[i].setMinimumDate(QDate(year + 1, (9 + i) % 12, 1))
                 self.PlanCalendars[i].setMaximumDate(QDate(year + 1, (10 + i) % 12, 1).addDays(-1))
+            self.PlanCalendars[i].setSelectedDate(QDate(1991,1,1))
 
     def StartPlanYearChanged(self):
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
         self.PlanYearLabel.setText(str(self.currentPlanYear))
         self.setPlanCalendarsInterval(self.currentPlanYear)
+        self.clearCellColors()
         self.updateWeekColors()
 
     def updateSum(self):
