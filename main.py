@@ -22,7 +22,9 @@ class MyWindow(QMainWindow):
         self.updateRasp()
         self.filename_edit = ""
         self.currCourse = self.courseSpinBox.value() - 1
+        self.PlanYearSpinBox.setValue(QDate.currentDate().year())
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
+
         self.lineEdits = [self.lineEdit0, self.lineEdit1, self.lineEdit2, self.lineEdit3, self.lineEdit4,
                           self.lineEdit5, self.lineEdit6, self.lineEdit7, self.lineEdit8, self.lineEdit9]
         self.dspinBoxes = [self.dspinBox0, self.dspinBox1, self.dspinBox2, self.dspinBox3, self.dspinBox4,
@@ -39,7 +41,7 @@ class MyWindow(QMainWindow):
                               self.calendarPWidget7,
                               self.calendarPWidget8, self.calendarPWidget9, self.calendarPWidget10,
                               self.calendarPWidget11]
-        self.setPlanCalendarsInterval(2023)
+        self.StartPlanYearChanged()
         # -------------------начальные значения групп итд-------------#
         self.currGroup = 0
         self.currProf = 0
@@ -67,8 +69,6 @@ class MyWindow(QMainWindow):
         self.clearAllButton.clicked.connect(self.clearPlan)
 
         self.PlanYearSpinBox.valueChanged.connect(self.StartPlanYearChanged)
-
-
 
     def groupChanged(self):
         self.currGroup = self.group_comboBox.currentIndex()
@@ -161,15 +161,15 @@ class MyWindow(QMainWindow):
             self.clearCellColors()
             self.errMessage(
                 "Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек.")
-        else:
-            self.updateWeekColors()
+
+        self.updateWeekColors()
         self.courseSpinBox.setMaximum(len(Plan.planFloat))
-        self.setSemester()
+
 
     def updateCourse(self):
         self.currCourse = self.courseSpinBox.value() - 1
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
-        self.PlanYearLabel.setText(str(self.currentPlanYear))
+        self.PlanYearLabel.setText(f"{self.currentPlanYear} - {self.currentPlanYear + 1}")
         self.setPlanCalendarsInterval(self.currentPlanYear)
         self.updatePlanLabels()
         self.clearCellColors()
@@ -186,17 +186,36 @@ class MyWindow(QMainWindow):
             self.setCellBGColor(startDate, QColor(255, 255, 255), self.PlanCalendars[(startDate.month() + 3) % 12])
             startDate = startDate.addDays(1)
 
+    #def updateWeekColors(self): #старая
+    #    if Plan.plan == []:
+    #        return
+    #    self.clearCellColors()
+    #    startDate = QDate(self.currentPlanYear, 9, 1)
+    #    lastWeek = 1
+    #    for i in range(len(Plan.plan[self.currCourse])):
+    #        while 0 <= self.currEdWeekNumber(startDate) - lastWeek < int(Plan.planFloat[self.currCourse][i]):
+    #            self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
+    #            startDate = startDate.addDays(1)
+    #        lastWeek = self.currEdWeekNumber(startDate)
+
     def updateWeekColors(self):
         if Plan.plan == []:
             return
         self.clearCellColors()
         startDate = QDate(self.currentPlanYear, 9, 1)
-        lastWeek = 1
-        for i in range(len(Plan.plan[self.currCourse])):
-            while self.currEdWeekNumber(startDate) - lastWeek < int(Plan.planFloat[self.currCourse][i]) and self.currEdWeekNumber(startDate) <= 52:
+        tempPlan = Plan.planFloat[self.currCourse].copy()
+        while self.currEdWeekNumber(startDate) == 1:
+            self.setCellBGColor(startDate, self.colors[0], self.PlanCalendars[(startDate.month() + 3) % 12])
+            startDate = startDate.addDays(1)
+        tempPlan[0] -= 1
+        for i in range(len(tempPlan)):
+            for j in range(int(tempPlan[i] * 7)):
                 self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
                 startDate = startDate.addDays(1)
-            lastWeek = self.currEdWeekNumber(startDate)
+            if startDate.dayOfWeek() == 7:
+                print(startDate)
+                self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
+                startDate = startDate.addDays(1)
 
     def updatePlanLabels(self):
         for i in range(10):
@@ -219,15 +238,12 @@ class MyWindow(QMainWindow):
         if Plan.sum[self.currCourse] != 52:
             self.errMessage(
                 "Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек.")
-            return
-        for i in range(10):
-            self.lineEdits[i].setEnabled(False)
-            self.dspinBoxes[i].setEnabled(False)
+        else:
+            for i in range(10):
+                self.lineEdits[i].setEnabled(False)
+                self.dspinBoxes[i].setEnabled(False)
 
-        self.setSemester()
         self.updateWeekColors()
-            # self.lineEdits[i].setVisible(False)
-            # self.spinBoxes[i].setVisible(False)
 
     def unblockPlanLabels(self):
         for i in range(10):
@@ -241,7 +257,7 @@ class MyWindow(QMainWindow):
         errorMessage.showMessage(message)
         errorMessage.exec()
 
-    def currEdWeekNumber(self, date):####udlasdlkfjals;kdjflajsdffix###
+    def currEdWeekNumber(self, date):
         if date.weekNumber()[0] >= QDate(date.year(), 9, 1).weekNumber()[0]:
             if date.weekNumber()[0] != 1:
                 return date.weekNumber()[0] - QDate(date.year(), 9, 1).weekNumber()[0] + 1
@@ -262,7 +278,6 @@ class MyWindow(QMainWindow):
         Plan.sum = []
         self.courseSpinBox.setValue(1)
         self.courseSpinBox.setMaximum(1)
-        print(self.currCourse)
         self.updatePlanLabels()
 
     def setPlanCalendarsInterval(self, year):
@@ -276,11 +291,10 @@ class MyWindow(QMainWindow):
             else:
                 self.PlanCalendars[i].setMinimumDate(QDate(year + 1, (9 + i) % 12, 1))
                 self.PlanCalendars[i].setMaximumDate(QDate(year + 1, (10 + i) % 12, 1).addDays(-1))
-            self.PlanCalendars[i].setSelectedDate(QDate(1991,1,1))
 
     def StartPlanYearChanged(self):
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
-        self.PlanYearLabel.setText(str(self.currentPlanYear))
+        self.PlanYearLabel.setText(f"{self.currentPlanYear} - {self.currentPlanYear + 1}")
         self.setPlanCalendarsInterval(self.currentPlanYear)
         self.clearCellColors()
         self.updateWeekColors()
@@ -291,17 +305,6 @@ class MyWindow(QMainWindow):
             weeksSum += i.value()
         self.weekSumLabel.setText(f"Текущая сумма учебных недель: {weeksSum}")
 
-    # def blockPlanLabelsValues(self):
-    #    for i in range(10):
-    #        self.lineEdits[i].
-    #        self.spinBoxes[i].
-
-
-# class PlanCellWidget(QWidget):
-#    def __init__(self):
-#        super().__init__()
-#        loadUi("planCellWidget.ui", self)
-#        print()
 
 def window():
     app = QApplication(sys.argv)
@@ -311,7 +314,7 @@ def window():
     sys.exit(app.exec())
 
 
-Plan = EdPlan()
-
-schedule = getRasp()
-window()
+if __name__ == "__main__":
+    Plan = EdPlan()
+    schedule = getRasp()
+    window()

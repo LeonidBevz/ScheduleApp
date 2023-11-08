@@ -782,9 +782,9 @@
      <widget class="QPushButton" name="fileDialogButton">
       <property name="geometry">
        <rect>
-        <x>290</x>
+        <x>319</x>
         <y>6</y>
-        <width>75</width>
+        <width>101</width>
         <height>24</height>
        </rect>
       </property>
@@ -1606,7 +1606,7 @@
           </font>
          </property>
          <property name="text">
-          <string>2023</string>
+          <string>2023 - 2024</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
