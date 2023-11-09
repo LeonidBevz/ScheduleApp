@@ -883,6 +883,9 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_plan_calendars">
+       <property name="verticalSpacing">
+        <number>6</number>
+       </property>
        <item row="1" column="2">
         <layout class="QVBoxLayout" name="verticalLayout_03november">
          <property name="spacing">
@@ -1273,7 +1276,7 @@
            </property>
            <property name="styleSheet">
             <string notr="true">#qt_calendar_calendarview::item:selected{
-	background-color: #ffffff;
+	background-color: transparent;
 }</string>
            </property>
            <property name="minimumDate">
@@ -1510,10 +1513,24 @@
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true">#qt_calendar_calendarview::item:selected{
-	background-color: #ffffff;
-}</string>
+	background-color: transparent;
+}
+</string>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhNone</set>
+           </property>
+           <property name="selectedDate">
+            <date>
+             <year>2023</year>
+             <month>9</month>
+             <day>14</day>
+            </date>
            </property>
            <property name="firstDayOfWeek">
             <enum>Qt::Monday</enum>
@@ -1535,6 +1552,9 @@
            </property>
            <property name="dateEditEnabled">
             <bool>false</bool>
+           </property>
+           <property name="dateEditAcceptDelay">
+            <number>1500</number>
            </property>
           </widget>
          </item>
