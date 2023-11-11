@@ -368,6 +368,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color1.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDoubleSpinBox" name="dspinBox0">
               <property name="enabled">
                <bool>false</bool>
@@ -407,6 +417,16 @@
              <widget class="QLineEdit" name="lineEdit1">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color2.png</pixmap>
               </property>
              </widget>
             </item>
@@ -451,6 +471,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color3.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDoubleSpinBox" name="dspinBox2">
               <property name="enabled">
                <bool>false</bool>
@@ -487,6 +517,16 @@
              <widget class="QLineEdit" name="lineEdit3">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_24">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color4.png</pixmap>
               </property>
              </widget>
             </item>
@@ -531,6 +571,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_31">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color5.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDoubleSpinBox" name="dspinBox4">
               <property name="enabled">
                <bool>false</bool>
@@ -567,6 +617,16 @@
              <widget class="QLineEdit" name="lineEdit5">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_32">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color6.png</pixmap>
               </property>
              </widget>
             </item>
@@ -611,6 +671,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_33">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color7.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDoubleSpinBox" name="dspinBox6">
               <property name="enabled">
                <bool>false</bool>
@@ -647,6 +717,16 @@
              <widget class="QLineEdit" name="lineEdit7">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_34">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color8.png</pixmap>
               </property>
              </widget>
             </item>
@@ -691,6 +771,16 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_35">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color9.png</pixmap>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QDoubleSpinBox" name="dspinBox8">
               <property name="enabled">
                <bool>false</bool>
@@ -727,6 +817,16 @@
              <widget class="QLineEdit" name="lineEdit9">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_36">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>colors/color10.png</pixmap>
               </property>
              </widget>
             </item>

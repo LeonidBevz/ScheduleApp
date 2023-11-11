@@ -32,9 +32,9 @@ class MyWindow(QMainWindow):
         for i in self.dspinBoxes:
             i.valueChanged.connect(self.updateSum)
 
-        self.colors = [QColor(225, 204, 90), QColor(193, 63, 254), QColor(47, 204, 255), QColor(32, 255, 105),
-                       QColor(32, 53, 255), QColor(255, 32, 137), QColor(255, 147, 32), QColor(61, 129, 0),
-                       QColor(255, 240, 0), QColor(255, 51, 51)]
+        self.colors = [QColor(119, 221, 119), QColor(255, 155, 170), QColor(220, 208, 255), QColor(255, 178, 139),
+                       QColor(252, 232, 131), QColor(198, 223, 144), QColor(153, 255, 153), QColor(175, 218, 252),
+                       QColor(62, 180, 137), QColor(175, 238, 238)]
         self.PlanCalendars = [self.calendarPWidget0, self.calendarPWidget1, self.calendarPWidget2,
                               self.calendarPWidget3,
                               self.calendarPWidget4, self.calendarPWidget5, self.calendarPWidget6,
@@ -165,7 +165,6 @@ class MyWindow(QMainWindow):
         self.updateWeekColors()
         self.courseSpinBox.setMaximum(len(Plan.planFloat))
 
-
     def updateCourse(self):
         self.currCourse = self.courseSpinBox.value() - 1
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
@@ -185,10 +184,11 @@ class MyWindow(QMainWindow):
         while startDate <= QDate(self.currentPlanYear + 1, 9, 1):
             self.setCellBGColor(startDate, QColor(255, 255, 255), self.PlanCalendars[(startDate.month() + 3) % 12])
             if startDate.day() == 1:
-                self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet("#qt_calendar_calendarview::item:selected {background-color: #ffffff}")
+                self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet(
+                    "#qt_calendar_calendarview::item:selected {background-color: #ffffff}")
             startDate = startDate.addDays(1)
 
-    #def updateWeekColors(self): #старая
+    # def updateWeekColors(self): #старая
     #    if Plan.plan == []:
     #        return
     #    self.clearCellColors()
@@ -206,8 +206,9 @@ class MyWindow(QMainWindow):
         self.clearCellColors()
         startDate = QDate(self.currentPlanYear, 9, 1)
         tempPlan = Plan.planFloat[self.currCourse].copy()
-        #стиль выделения для первого календаря
-        self.PlanCalendars[0].setStyleSheet(f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[0].red()},{self.colors[0].green()},{self.colors[0].blue()});}}")
+        # стиль выделения для первого календаря
+        self.PlanCalendars[0].setStyleSheet(
+            f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[0].red()},{self.colors[0].green()},{self.colors[0].blue()});}}")
         while self.currEdWeekNumber(startDate) == 1:
             self.setCellBGColor(startDate, self.colors[0], self.PlanCalendars[(startDate.month() + 3) % 12])
             startDate = startDate.addDays(1)
@@ -215,13 +216,15 @@ class MyWindow(QMainWindow):
         for i in range(len(tempPlan)):
             for j in range(int(tempPlan[i] * 7)):
                 self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
-                if startDate.day() == 1:#установка цвета выбранной даты
-                    self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet(f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[i].red()},{self.colors[i].green()},{self.colors[i].blue()});}}")
+                if startDate.day() == 1:  # установка цвета выбранной даты
+                    self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet(
+                        f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[i].red()},{self.colors[i].green()},{self.colors[i].blue()});}}")
                 startDate = startDate.addDays(1)
             if startDate.dayOfWeek() == 7:
                 self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
                 if startDate.day() == 1:
-                    self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet(f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[i].red()},{self.colors[i].green()},{self.colors[i].blue()});}}")
+                    self.PlanCalendars[(startDate.month() + 3) % 12].setStyleSheet(
+                        f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[i].red()},{self.colors[i].green()},{self.colors[i].blue()});}}")
                 startDate = startDate.addDays(1)
 
     def updatePlanLabels(self):
@@ -277,7 +280,6 @@ class MyWindow(QMainWindow):
             else:
                 return self.currEdWeekNumber(QDate(date.year() - 1, 12, 31)) + date.weekNumber()[0] - 1
 
-
     def clearPlan(self):
         self.clearCellColors()
         Plan.plan = []
@@ -300,7 +302,7 @@ class MyWindow(QMainWindow):
             else:
                 self.PlanCalendars[i].setMinimumDate(QDate(year + 1, (9 + i) % 12, 1))
                 self.PlanCalendars[i].setMaximumDate(QDate(year + 1, (10 + i) % 12, 1).addDays(-1))
-                self.PlanCalendars[i].setSelectedDate(QDate(year+1, (9 + i) % 12, 1))
+                self.PlanCalendars[i].setSelectedDate(QDate(year + 1, (9 + i) % 12, 1))
 
     def StartPlanYearChanged(self):
         self.currentPlanYear = self.currCourse + self.PlanYearSpinBox.value()
