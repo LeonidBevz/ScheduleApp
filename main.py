@@ -160,7 +160,7 @@ class MyWindow(QMainWindow):
         if Plan.sum[self.currCourse] != 52:
             self.clearCellColors()
             self.errMessage(
-                "Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек.")
+                "Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек!")
 
         self.updateWeekColors()
         self.courseSpinBox.setMaximum(len(Plan.planFloat))
@@ -237,6 +237,12 @@ class MyWindow(QMainWindow):
                 self.dspinBoxes[i].setValue(Plan.planFloat[self.currCourse][i])
         # print(Plan.sum[self.currCourse])
 
+    def PlanValuesCorrect(self):
+        for i in range(9):
+            if self.dspinBoxes[i].value() == 0 and self.dspinBoxes[i + 1].value() != 0:
+                return False
+        return True
+
     def blockPlanLabels(self):
         newNames = []
         newNums = []
@@ -244,10 +250,16 @@ class MyWindow(QMainWindow):
             newNames.append(self.lineEdits[i].text())
             newNums.append(self.dspinBoxes[i].value())
         Plan.setPlan(newNames, newNums, self.currCourse)
-
+        if Plan.sum[self.currCourse] == 0:
+            self.errMessage("Пустой учебный план!")
+            return
+        if self.PlanValuesCorrect() is False:
+            self.errMessage("Неверный порядок учебного плана!")
+            return
         if Plan.sum[self.currCourse] != 52:
-            self.errMessage(
-                "Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек.")
+            self.errMessage("Неверное количество недель(не 52), если используется файл, проверьте нет ли в плане пустых ячеек!")
+            if Plan.sum[self.currCourse] > 52:
+                return
         else:
             for i in range(10):
                 self.lineEdits[i].setEnabled(False)
