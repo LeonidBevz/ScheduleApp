@@ -206,13 +206,15 @@ class MyWindow(QMainWindow):
         self.clearCellColors()
         startDate = QDate(self.currentPlanYear, 9, 1)
         tempPlan = Plan.planFloat[self.currCourse].copy()
+        #if startDate.dayOfWeek() != 7 and startDate.dayOfWeek() != 6:
+        tempPlan[0] -= 1
         # стиль выделения для первого календаря
         self.PlanCalendars[0].setStyleSheet(
             f"#qt_calendar_calendarview::item:selected{{	background-color: rgb({self.colors[0].red()},{self.colors[0].green()},{self.colors[0].blue()});}}")
         while self.currEdWeekNumber(startDate) == 1:
             self.setCellBGColor(startDate, self.colors[0], self.PlanCalendars[(startDate.month() + 3) % 12])
             startDate = startDate.addDays(1)
-        tempPlan[0] -= 1
+
         for i in range(len(tempPlan)):
             for j in range(int(tempPlan[i] * 7)):
                 self.setCellBGColor(startDate, self.colors[i], self.PlanCalendars[(startDate.month() + 3) % 12])
