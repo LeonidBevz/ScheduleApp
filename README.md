@@ -17,11 +17,11 @@
 Schedule App - это приложение, позволяющее студентам и преподавателям ГУАП работать с учебным планом занятий и их расписанием. 
 
   <p align="center">
-    <img src="media/tab1.png"> 
+    <img src="Media/tab1.png"> 
     <p align="center"> Вкладка для просмотра расписания занятий <p>
   </p>
   <p align="center">
-    <img src="media/tab2.png">
+    <img src="Media/tab2.png">
     <p align="center"> Вкладка для работы с учебным планом <p>
   </p>
 
